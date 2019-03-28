@@ -16,7 +16,7 @@ var angle = [];
 var dataCn, dataUsa, dataKorea, dataJapan;
 var rows;
 
-      
+
 
 var n,margin,maxw,maxh,maxw_,maxh_;
 var padding = 20;
@@ -60,29 +60,29 @@ function setup() {
   
   if(width > 2000){
     n = 50;
-  }else{
+}else{
     n = 30;
-  }
-  margin = width/100*8;
-  space = (width-2*margin)/n; 
- 
-  maxw = (width-margin*2)/n*0.8;
-  maxh = maxw*1.5;
-  padding = (width-margin*2)/n*0.2;
-  maxw_ = maxw*1.5;
-  maxh_ = maxh*1.5;
+}
+margin = width/100*8;
+space = (width-2*margin)/n; 
+
+maxw = (width-margin*2)/n*0.8;
+maxh = maxw*1.5;
+padding = (width-margin*2)/n*0.2;
+maxw_ = maxw*1.5;
+maxh_ = maxh*1.5;
 
 
-  for(var i = 0; i<500;i++){
-    imagesCn[i] = createImg(dataCn.getString(i,18));
-    imagesCn[i].hide();
-    imagesUsa[i] = createImg(dataUsa.getString(i,18));
-    imagesUsa[i].hide();
-    imagesKorea[i] = createImg(dataKorea.getString(i,18));
-    imagesKorea[i].hide();
-    imagesJapan[i] = createImg(dataJapan.getString(i,18));
-    imagesJapan[i].hide();
-  }
+  // for(var i = 0; i<500;i++){
+  //   imagesCn[i] = createImg(dataCn.getString(i,18));
+  //   imagesCn[i].hide();
+  //   imagesUsa[i] = createImg(dataUsa.getString(i,18));
+  //   imagesUsa[i].hide();
+  //   imagesKorea[i] = createImg(dataKorea.getString(i,18));
+  //   imagesKorea[i].hide();
+  //   imagesJapan[i] = createImg(dataJapan.getString(i,18));
+  //   imagesJapan[i].hide();
+  // }
 
 }
 
@@ -92,6 +92,12 @@ function preload() {
   dataKorea = loadTable("data/korea.csv","header");
   dataJapan = loadTable("data/japan.csv","header");
 
+  for(var i = 0; i<500;i++){
+    imagesCn[i] = loadImage("image/china/china-"+i+".jpg");
+    imagesUsa[i] = loadImage("image/usa/usa-"+i+".jpg");
+    imagesKorea[i] = loadImage("image/korea/korea-"+i+".jpg");
+    imagesJapan[i] = loadImage("image/japan/japan-"+i+".jpg");
+}
 }
 
 
@@ -99,24 +105,24 @@ function draw(){
   background(255);
   drawBtn(btnY); 
   if(button == "a") {    
-        drawRect(dataCn);
-        showPost(dataCn,imagesCn);
+    drawRect(dataCn);
+    showPost(dataCn,imagesCn);
     
-   }else if (button == "b") {
+}else if (button == "b") {
 
-        drawRect(dataUsa);
-        showPost(dataUsa,imagesUsa);
+    drawRect(dataUsa);
+    showPost(dataUsa,imagesUsa);
     
-    }else if (button == "c"){
-        drawRect(dataKorea);
-        showPost(dataKorea,imagesKorea);
+}else if (button == "c"){
+    drawRect(dataKorea);
+    showPost(dataKorea,imagesKorea);
 
-    }else if (button == "d"){
+}else if (button == "d"){
 
-        drawRect(dataJapan);
-        showPost(dataJapan,imagesJapan);
-        
-    }
+    drawRect(dataJapan);
+    showPost(dataJapan,imagesJapan);
+
+}
 }
 
 
@@ -153,16 +159,16 @@ function drawRect(data){
         h5 = maxh - h1-h4;
         fill(data.getString(i,17));
         rect(x[i]+w2+w3,y[i]+h1+h4,w4,h5); 
-   
-  }
+
+    }
 }
 
 
 function showPost(data,images){
-     for(var i = 0; i<rows; i++){        
+   for(var i = 0; i<rows; i++){        
 
-       if(mouseX>x[i] && mouseX <x[i]+maxw && mouseY>y[i] && mouseY<y[i]+maxh){
-        
+     if(mouseX>x[i] && mouseX <x[i]+maxw && mouseY>y[i] && mouseY<y[i]+maxh){
+
         noStroke();
         fill(255,200);
         rect(0,0,width,3000);
@@ -203,34 +209,40 @@ function showPost(data,images){
 
         pop();
 
-       
-        var posx = x[i]+maxw_/3;
-        var posy = y[i]+maxh_/2+190;
+
+        var posx = x[i]+maxw_/2;
+        var posy = y[i]+maxh_/2+160;
         
         //黑色背景
         fill(0,200);
         noStroke();
+        vertex(posx,posy+60-170);
+        vertex(posx-10,posy+60-150);
+        vertex(posx+10,posy+60-150);
+        endShape(CLOSE);
+
         rectMode(CENTER);
-        rect(posx,posy+60,200,300);
-        
+        rect(posx,posy+60,180,300);
+        beginShape();
+
         //海报
         imageMode(CENTER);
-        image(images[i],posx,posy,200,286);
+        image(images[i],posx,posy+30,150,214);
         
         //电影信息
         fill(255);
         textSize(16);
         textAlign(LEFT);
-        text("《"+data.getString(i,1)+"》",x[i]-75,y[i]+maxh_+286+15);
-        text(data.getString(i,2)+"分",x[i]-65,y[i]+maxh_+286+35);
-      }
+        text("《"+data.getString(i,1)+"》",x[i]-50,y[i]+maxh_+270);
+        text(data.getString(i,2)+"分",x[i]-46,y[i]+maxh_+300);
     }
+}
 }
 
 
 
 function drawBubble(data){
-   for(var i = 0; i<rows; i++){
+ for(var i = 0; i<rows; i++){
     noStroke();
     x[i] = margin + space*(i%s);
     y[i] = margin + (10+space)*int((i/s));
@@ -240,7 +252,7 @@ function drawBubble(data){
 
     fill(data.getString(i,9));
     ellipse(x[i],y[i],r,r);
-    }   
+}   
 }
 
 
@@ -280,48 +292,48 @@ function mousePressed() {
     if (mouseX> width/2-2*btnW && mouseX< width/2-1*btnW &&
         mouseY> btnY && mouseY< btnY + btnH) {
         button = "a";
-        btn1Color = color(hlcolor);
-        btn2Color = color(unhlcolor);
-        btn3Color = color(unhlcolor);
-        btn4Color = color(unhlcolor);
-        txt1Color = color(hltxt);
-        txt2Color = color(unhltxt);
-        txt3Color = color(unhltxt);
-        txt4Color = color(unhltxt);
-    } else if (mouseX > width/2-1*btnW && mouseX < width/2&&
-        mouseY> btnY && mouseY < btnY + btnH) {
-        button = "b";
-        btn1Color = color(unhlcolor);
-        btn2Color = color(hlcolor);
-        btn3Color = color(unhlcolor);
-        btn4Color = color(unhlcolor);
-        txt1Color = color(unhltxt);
-        txt2Color = color(hltxt);
-        txt3Color = color(unhltxt);
-        txt4Color = color(unhltxt);
-    } else if (mouseX > width/2&& mouseX < width/2+btnW&&
-        mouseY> btnY && mouseY < btnY + btnH) {
-        button = "c";
-        btn1Color = color(unhlcolor);
-        btn2Color = color(unhlcolor);
-        btn3Color = color(hlcolor);
-        btn4Color = color(unhlcolor);
-        txt1Color = color(unhltxt);
-        txt2Color = color(unhltxt);
-        txt3Color = color(hltxt);
-        txt4Color = color(unhltxt);
-    } else if (mouseX > width/2+1*btnW && mouseX < width/2+2*btnW&&
-        mouseY> btnY && mouseY < btnY + btnH) {
-        button = "d";
-        btn1Color = color(unhlcolor);
-        btn2Color = color(unhlcolor);
-        btn3Color = color(unhlcolor);
-        btn4Color = color(hlcolor);
-        txt1Color = color(unhltxt);
-        txt2Color = color(unhltxt);
-        txt3Color = color(unhltxt);
-        txt4Color = color(hltxt);
-    } 
+    btn1Color = color(hlcolor);
+    btn2Color = color(unhlcolor);
+    btn3Color = color(unhlcolor);
+    btn4Color = color(unhlcolor);
+    txt1Color = color(hltxt);
+    txt2Color = color(unhltxt);
+    txt3Color = color(unhltxt);
+    txt4Color = color(unhltxt);
+} else if (mouseX > width/2-1*btnW && mouseX < width/2&&
+    mouseY> btnY && mouseY < btnY + btnH) {
+    button = "b";
+    btn1Color = color(unhlcolor);
+    btn2Color = color(hlcolor);
+    btn3Color = color(unhlcolor);
+    btn4Color = color(unhlcolor);
+    txt1Color = color(unhltxt);
+    txt2Color = color(hltxt);
+    txt3Color = color(unhltxt);
+    txt4Color = color(unhltxt);
+} else if (mouseX > width/2&& mouseX < width/2+btnW&&
+    mouseY> btnY && mouseY < btnY + btnH) {
+    button = "c";
+    btn1Color = color(unhlcolor);
+    btn2Color = color(unhlcolor);
+    btn3Color = color(hlcolor);
+    btn4Color = color(unhlcolor);
+    txt1Color = color(unhltxt);
+    txt2Color = color(unhltxt);
+    txt3Color = color(hltxt);
+    txt4Color = color(unhltxt);
+} else if (mouseX > width/2+1*btnW && mouseX < width/2+2*btnW&&
+    mouseY> btnY && mouseY < btnY + btnH) {
+    button = "d";
+    btn1Color = color(unhlcolor);
+    btn2Color = color(unhlcolor);
+    btn3Color = color(unhlcolor);
+    btn4Color = color(hlcolor);
+    txt1Color = color(unhltxt);
+    txt2Color = color(unhltxt);
+    txt3Color = color(unhltxt);
+    txt4Color = color(hltxt);
+} 
 }
 
 
